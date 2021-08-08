@@ -20,7 +20,7 @@ const Login = ({handleLogin}) => {
 
     return ((
         <>
-            <form action='#' method='POST' onSubmit={handleSubmit} className="login">
+            <form action='#' method='GET' onSubmit={handleSubmit} className="login">
                 <h1 className='login__title'>Вход</h1>
 
                 <input onChange={handleChange}

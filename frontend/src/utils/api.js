@@ -1,7 +1,7 @@
 class Api {
     constructor({baseUrl, authorization}) {
         this._baseUrl = baseUrl;
-       this._authorization = authorization;
+        this._authorization = authorization;
     }
 
     _checkErrors(result) {
@@ -15,6 +15,7 @@ class Api {
         return fetch(`${this._baseUrl}/users/me`, {
             method: "GET",
             headers: {
+                "Content-Type": "application/json",
                 authorization: this._authorization,
             },
         }).then((result) => this._checkErrors(result));
@@ -24,6 +25,7 @@ class Api {
         return fetch(`${this._baseUrl}/cards`, {
             method: "GET",
             headers: {
+                "Content-Type": "application/json",
                 authorization: this._authorization,
             },
         }).then((result) => this._checkErrors(result));
@@ -33,8 +35,8 @@ class Api {
         return fetch(`${this._baseUrl}/users/me`, {
             method: "PATCH",
             headers: {
+                'Content-Type': 'application/json',
                 authorization: this._authorization,
-                'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 name: name,
@@ -47,8 +49,8 @@ class Api {
         return fetch(`${this._baseUrl}/users/me/avatar`, {
             method: "PATCH",
             headers: {
+                'Content-Type': 'application/json',
                 authorization: this._authorization,
-                'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 avatar: avatar,
@@ -60,8 +62,8 @@ class Api {
         return fetch(`${this._baseUrl}/cards`, {
             method: "POST",
             headers: {
+                'Content-Type': 'application/json',
                 authorization: this._authorization,
-                'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 name: title,
@@ -74,6 +76,7 @@ class Api {
         return fetch(`${this._baseUrl}/cards/likes/${item}`, {
             method: "PUT",
             headers: {
+                "Content-Type": "application/json",
                 authorization: this._authorization,
             },
         }).then((result) => this._checkErrors(result));
@@ -83,6 +86,7 @@ class Api {
         return fetch(`${this._baseUrl}/cards/likes/${item}`, {
             method: "DELETE",
             headers: {
+                "Content-Type": "application/json",
                 authorization: this._authorization,
             },
         }).then((result) => this._checkErrors(result));
@@ -92,6 +96,7 @@ class Api {
         return fetch(`${this._baseUrl}/cards/${item}`, {
             method: "DELETE",
             headers: {
+                "Content-Type": "application/json",
                 authorization: this._authorization,
             },
         }).then((result) => this._checkErrors(result));
@@ -100,7 +105,8 @@ class Api {
 }
 
 const api = new Api({
-    baseUrl: "https://api.mestoapp.nomoredomains.monster"
+    baseUrl: "https://api.mestoapp.nomoredomains.monster",
+    authorization: `Bearer ${localStorage.getItem("jwt")}`,
 });
 
 export default api;

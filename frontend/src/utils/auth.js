@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-export const BASE_URL = 'https://mestoapp.nomoredomains.club';
+export const BASE_URL = 'https://api.mestoapp.nomoredomains.monster';
 
 const checkResponse = (res) => {
     if (!res.ok) {
