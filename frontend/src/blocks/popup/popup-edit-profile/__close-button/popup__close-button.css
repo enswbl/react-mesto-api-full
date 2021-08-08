@@ -1,0 +1,27 @@
+@import url(../__close-button/_photo/popup__close-button_photo.css);
+@import url(../__close-button/_status/popup__close-button_status.css);
+
+.popup__close-button {
+  width: 41px;
+  height: 41px;
+  margin: 0 0 0 471px;
+  background-color: transparent;
+  background-image: url('../../../../images/close-button.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  border: 0;
+}
+
+.popup__close-button:hover {
+  background-image: url('../../../../images/close-button-active.svg');
+}
+
+@media (max-width: 480px) {
+
+  .popup__close-button {
+    width: 30px;
+    height: 30px;
+    margin: 0 0 14px 256px;
+  }
+
+}

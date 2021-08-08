@@ -1,0 +1,17 @@
+.popup__close-button.popup__close-button_photo {
+  width: 40px;
+  height: 40px;
+  margin: 0 -41px 0 auto;
+  padding: 0;
+}
+
+@media (max-width: 480px) {
+
+  .popup__close-button.popup__close-button_photo {
+    background-size: 40px;
+    width: 30px;
+    height: 30px;
+    margin: 0 -31px 0 auto;
+  }
+
+}

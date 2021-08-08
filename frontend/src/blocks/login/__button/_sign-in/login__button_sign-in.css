@@ -1,0 +1,10 @@
+.login__button_sign-in {
+    margin-bottom: 112px !important;
+}
+
+@media (max-width: 380px) {
+
+    .login__button_sign-in  {
+        margin: 173px 30px 77px !important;
+    }
+}

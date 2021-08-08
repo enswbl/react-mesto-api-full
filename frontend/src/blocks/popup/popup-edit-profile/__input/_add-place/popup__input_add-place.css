@@ -1,0 +1,14 @@
+.popup__input.popup__input_add-place {
+  padding-bottom: 12px;
+  font-size: 12px;
+  line-height: 15px;
+}
+
+
+@media (max-width: 480px) {
+
+  .popup__input.popup__input_add-place {
+    margin: 20px 20px 0 20px;
+  }
+
+}

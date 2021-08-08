@@ -1,0 +1,17 @@
+@import url(_add-place/popup__input_add-place.css);
+
+.popup__input {
+  margin: 15px 36px 15px 36px;
+  padding-bottom: 13px;
+  font-size: 14px;
+  line-height: 17px;
+  border: 1px solid rgb(255, 255, 255);
+  border-bottom: 1px solid rgba(84, 84, 84, 0.2);
+}
+
+@media (max-width: 480px) {
+
+  .popup__input {
+    margin: 15px 22px 15px 22px;
+  }
+}

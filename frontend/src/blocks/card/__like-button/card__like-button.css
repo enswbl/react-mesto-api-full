@@ -1,0 +1,18 @@
+@import url(_active/card__like-button_active.css);
+
+.card__like-button {
+/*   max-width: 21px;
+  width: 100%; */
+  width: 21px;
+  height: 19px;
+  background-color: #ffffff;
+  background-image: url('../../../images/like-button.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  border: none;
+/*   outline: none; DON'T */
+}
+
+.card__like-button:hover {
+  opacity: 0.6;
+}

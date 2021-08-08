@@ -1,0 +1,18 @@
+.popup__input-error {
+  margin: 15px 36px 0 36px;
+  border-bottom: 1px solid #ff0000;
+}
+
+@media (max-width: 480px) {
+
+  .popup__input-error {
+    margin: 15px 22px 0 22px;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .popup__input.popup__input_add-place.popup__input-error {
+    margin: 20px 20px 0 20px;
+  }
+}

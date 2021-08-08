@@ -1,0 +1,15 @@
+.login__link {
+    margin-bottom: 80px;
+    text-align: center;
+    font-size: 14px;
+    line-height: 17px;
+    color: #ffffff;
+    text-decoration: inherit;
+}
+
+@media (max-width: 380px) {
+
+    .login__link {
+        margin-bottom: 40px;
+    }
+}

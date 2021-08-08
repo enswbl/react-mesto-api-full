@@ -1,0 +1,17 @@
+@import url(./_active/popup__input-error-message_active.css);
+
+
+.popup__input-error-message {
+  display: none;
+  margin: 5px 36px 0 36px;
+  color: #ff0000;
+  font-size: 12px;
+  line-height: 15px;
+}
+
+@media (max-width: 480px) {
+
+  .popup__input-error-message {
+    margin: 5px 22px 0 22px;
+  }
+}

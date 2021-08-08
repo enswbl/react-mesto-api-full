@@ -1,0 +1,41 @@
+@import url(../footer/__copyright/footer__copyright.css);
+
+
+.footer {
+  width: 68.91%;
+  margin: 0 auto;
+  padding-bottom: 60px;
+}
+
+@media (max-width: 1124px) {
+
+  .footer  {
+    width: calc(100% - 96px);
+  }
+
+}
+
+@media (max-width: 768px) {
+
+  .footer  {
+    width: calc(100% - 72px);
+  }
+
+}
+
+@media (max-width: 540px) {
+
+  .footer  {
+    width: calc(100% - 48px);
+  }
+
+}
+
+@media (max-width: 480px) {
+
+  .footer {
+    width: calc(100% - 38px);
+    padding-bottom: 36px;
+  }
+
+}

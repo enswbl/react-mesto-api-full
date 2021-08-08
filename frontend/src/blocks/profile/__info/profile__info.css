@@ -1,0 +1,20 @@
+.profile__info {
+  max-width: 45%;
+  /* width: 38.1%; */
+  margin: 18px 15px 0 0;
+  display: grid;
+  grid-template-columns: repeat(1, 100%);
+  grid-template-rows: repeat(1, minmax(auto, 54px));
+  /* row-gap: 16px; */
+}
+
+@media (max-width: 768px) {
+
+  .profile__info {
+    max-width: 88.13%;
+    margin: 0 auto 36px;
+    /* row-gap: 14px; */
+    /* grid-template-rows: repeat(1, minmax(14px, 38px)); */
+  }
+
+}

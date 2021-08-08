@@ -1,0 +1,7 @@
+@media (max-width: 480px) {
+
+    .popup__close-button_status {
+        margin: 0 0 21px 0 !important;
+    }
+
+}

@@ -1,0 +1,20 @@
+@import url(../__button/_sign-in/header__button_sign-in.css);
+
+.header__button {
+    color: #ffffff;
+    text-decoration: none;
+
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+
+    margin: 6px 0 46px 0;
+}
+
+@media (max-width: 480px) {
+
+    .header__button {
+        margin: 6px 27px 32px 0;
+    }
+
+}

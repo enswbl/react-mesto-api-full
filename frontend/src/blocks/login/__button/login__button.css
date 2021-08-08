@@ -1,0 +1,26 @@
+@import url(./_sign-in/login__button_sign-in.css);
+
+.login__button {
+    margin-top: 201px;
+    margin-bottom: 15px;
+    padding: 14px 84px;
+    background-color: #ffffff;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    color: #000000;
+    border-radius: 2px;
+    border: none;
+}
+
+.login__button:hover {
+    background-color: rgb(217, 217, 217);
+}
+
+@media (max-width: 380px) {
+
+    .login__button {
+        margin: 173px 30px 20px;
+        padding: 14px 35px;
+    }
+}

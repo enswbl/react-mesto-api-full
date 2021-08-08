@@ -1,0 +1,13 @@
+.popup__icon {
+    max-width: 120px;
+    width: 100%;
+    margin: 60px auto 32px;
+}
+
+@media (max-width: 480px) {
+
+    .popup__icon {
+        margin: 50px auto 40px;
+    }
+
+}
