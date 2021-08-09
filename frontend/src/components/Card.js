@@ -8,7 +8,7 @@ function Card({title, image, like, owner, id, onSelectedCard, onLikeCard, onRemo
 
     const isOwn = currentUser._id === owner;
 
-    const isLiked = like.some(i => i._id === currentUser._id);
+    const isLiked = like.some(i => i === currentUser._id);
 
     function handleImageClick() {
         onSelectedCard({title, image});

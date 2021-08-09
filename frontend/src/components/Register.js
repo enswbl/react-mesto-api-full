@@ -16,7 +16,6 @@ const Register = ({handleRegister}) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         handleRegister(userData)
-        console.log('userData', userData)
     }
 
     return ((

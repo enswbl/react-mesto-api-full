@@ -1,7 +1,6 @@
 class Api {
-    constructor({baseUrl, authorization}) {
+    constructor({baseUrl}) {
         this._baseUrl = baseUrl;
-        this._authorization = authorization;
     }
 
     _checkErrors(result) {
@@ -11,102 +10,113 @@ class Api {
         return result.json();
     }
 
-    getUserInfo() {
+    getUserInfo(jwt) {
         return fetch(`${this._baseUrl}/users/me`, {
             method: "GET",
             headers: {
-                "Content-Type": "application/json",
-                authorization: this._authorization,
+                'Content-Type': 'application/json',
+                authorization: `Bearer ${jwt}`,
             },
+            credentials: 'include',
         }).then((result) => this._checkErrors(result));
     }
 
-    getInitialCards() {
+    getInitialCards(jwt) {
         return fetch(`${this._baseUrl}/cards`, {
             method: "GET",
             headers: {
-                "Content-Type": "application/json",
-                authorization: this._authorization,
+                'Content-Type': 'application/json',
+                authorization: `Bearer ${jwt}`,
             },
+            credentials: 'include',
         }).then((result) => this._checkErrors(result));
     }
 
-    setUserInfo({name, description}) {
+    setUserInfo({name, description}, jwt) {
         return fetch(`${this._baseUrl}/users/me`, {
             method: "PATCH",
             headers: {
                 'Content-Type': 'application/json',
-                authorization: this._authorization,
+                authorization: `Bearer ${jwt}`,
             },
             body: JSON.stringify({
                 name: name,
                 about: description
             }),
+            credentials: 'include',
         }).then((result) => this._checkErrors(result));
     }
 
-    setUserAvatar({avatar}) {
+    setUserAvatar({avatar}, jwt) {
+
+        console.log('avatar', avatar)
+
         return fetch(`${this._baseUrl}/users/me/avatar`, {
             method: "PATCH",
             headers: {
                 'Content-Type': 'application/json',
-                authorization: this._authorization,
+                authorization: `Bearer ${jwt}`,
             },
             body: JSON.stringify({
-                avatar: avatar,
+                //avatar: avatar,
+                avatar
             }),
+            credentials: 'include',
         }).then((result) => this._checkErrors(result));
     }
 
-    sendCard({title, image}) {
+    sendCard({title, image}, jwt) {
         return fetch(`${this._baseUrl}/cards`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
-                authorization: this._authorization,
+                authorization: `Bearer ${jwt}`,
             },
             body: JSON.stringify({
                 name: title,
                 link: image
             }),
+            credentials: 'include',
         }).then((result) => this._checkErrors(result));
     }
 
-    setLike(item) {
-        return fetch(`${this._baseUrl}/cards/likes/${item}`, {
+    setLike(item, jwt) {
+        return fetch(`${this._baseUrl}/cards/${item}/likes`, {
             method: "PUT",
             headers: {
-                "Content-Type": "application/json",
-                authorization: this._authorization,
+                'Content-Type': 'application/json',
+                authorization: `Bearer ${jwt}`,
             },
+            credentials: 'include',
         }).then((result) => this._checkErrors(result));
     }
 
-    removeLike(item) {
-        return fetch(`${this._baseUrl}/cards/likes/${item}`, {
+    removeLike(item, jwt) {
+        return fetch(`${this._baseUrl}/cards/${item}/likes`, {
             method: "DELETE",
             headers: {
-                "Content-Type": "application/json",
-                authorization: this._authorization,
+                'Content-Type': 'application/json',
+                authorization: `Bearer ${jwt}`,
             },
+            credentials: 'include',
         }).then((result) => this._checkErrors(result));
     }
 
-    removeCard(item) {
+    removeCard(item, jwt) {
         return fetch(`${this._baseUrl}/cards/${item}`, {
             method: "DELETE",
             headers: {
-                "Content-Type": "application/json",
-                authorization: this._authorization,
+                'Content-Type': 'application/json',
+                authorization: `Bearer ${jwt}`,
             },
+            credentials: 'include',
         }).then((result) => this._checkErrors(result));
     }
 
 }
 
 const api = new Api({
-    baseUrl: "https://api.mestoapp.nomoredomains.monster",
-    authorization: `Bearer ${localStorage.getItem("jwt")}`,
+    baseUrl: "http://localhost:3030",  // TODO https://api.mestoapp.nomoredomains.monster
 });
 
 export default api;

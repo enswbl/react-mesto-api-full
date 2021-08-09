@@ -29,7 +29,7 @@ function Main({onEditAvatar, onEditProfile, onAddPlace, currentCards, onSelected
                         title={item.name}
                         image={item.link}
                         like={item['likes']}
-                        owner={item.owner._id}
+                        owner={item.owner}
                         id={item._id}
 
                         key={item._id}

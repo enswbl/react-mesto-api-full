@@ -1,24 +1,5 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# logs
-logs
-*.log
-npm-debug.log*
-
-# dependency directory
-node_modules
-
-# optional npm cache directory
-.npm
-
-# optional REPL history
-.DS_Store
-.idea
-.vscode
-
-# environment
-.env
-
 # dependencies
 /node_modules
 /.pnp
@@ -28,7 +9,7 @@ node_modules
 /coverage
 
 # production
-build
+/build
 
 # misc
 .DS_Store

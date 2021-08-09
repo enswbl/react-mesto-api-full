@@ -1,7 +1,4 @@
-import React from 'react';
-
-
-export const BASE_URL = 'https://api.mestoapp.nomoredomains.monster';
+export const BASE_URL = 'http://localhost:3030'; // TODO https://api.mestoapp.nomoredomains.monster
 
 const checkResponse = (res) => {
     if (!res.ok) {
@@ -17,7 +14,8 @@ export const register = ({email, password}) => {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({password, email})
+        body: JSON.stringify({password, email}),
+        credentials: 'include',
     })
         .then((res) => checkResponse(res))
         .then((res) => {
@@ -32,7 +30,8 @@ export const authorize = ({email, password}) => {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({password, email})
+        body: JSON.stringify({password, email}),
+        credentials: 'include',
     })
         .then((res) => checkResponse(res))
         .then((res) => {
@@ -47,7 +46,8 @@ export const checkData = (token) => {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`,
-        }
+        },
+        credentials: 'include',
     })
         .then((res) => checkResponse(res))
         .then((res) => {

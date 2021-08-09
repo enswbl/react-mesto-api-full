@@ -1,14 +1,12 @@
 import React from 'react';
-import {Route, Switch, Redirect, useHistory} from 'react-router-dom';
+import {Redirect, Route, Switch, useHistory} from 'react-router-dom';
 import Header from './Header';
 import Main from './Main';
-/*import PopupWithForm from '../PopupWithForm/PopupWithForm';*/
 import EditAvatarPopup from './EditAvatarPopup';
 import EditProfilePopup from './EditProfilePopup';
 import AddPlacePopup from './AddPlacePopup';
 import ImagePopup from './ImagePopup';
 import ConfirmDeletePopup from './ConfirmDeletePopup';
-import Footer from './Footer';
 import api from '../utils/api';
 
 import {CurrentUserContext} from '../contexts/CurrentUserContext'
@@ -62,41 +60,66 @@ function App() {
 
     const history = useHistory();
 
-    React.useEffect(() => {
-        api.getUserInfo()
-            .then((result) => {
-                setCurrentUserState(result)
-            })
-            .catch((err) => {
-                console.log("Something is Wrong:", err);
-            });
-    }, [])
+    const tokenCheck = () => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            Auth.checkData(token)
+                .then((res) => {
+                    if (res) {
+                        setLoggedIn(true);
+                        history.push('/users/me');
+                        setUserData({email: res.user.email})
+                    }
+                })
+                .catch((err) => {
+                    console.log("Something is Wrong:", err);
+                });
+            return token;
+        }
+    }
 
-
     React.useEffect(() => {
-        api.getInitialCards()
-            .then((response) => {
-                setCurrentCardsState(response)
-            })
-            .catch((err) => {
-                console.log("Something is Wrong:", err);
-            });
-    }, []);
+        tokenCheck()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [loggedIn])
 
     React.useEffect(() => {
         if (loggedIn) {
             history.push('/users/me');
         }
-    }, [loggedIn])
+    }, [history, loggedIn])
 
     React.useEffect(() => {
-        tokenCheck()
-    }, [])
+        const token = tokenCheck();
+
+        api.getUserInfo(token)
+            .then((res) => {
+                setCurrentUserState(res.user)
+            })
+            .catch((err) => {
+                console.log("Something is Wrong:", err);
+            });
+    }, [loggedIn])
+
+
+    React.useEffect(() => {
+        const token = tokenCheck();
+
+        api.getInitialCards(token)
+            .then((res) => {
+                setCurrentCardsState(res.cards)
+            })
+            .catch((err) => {
+                console.log("Something is Wrong:", err);
+            });
+    }, [loggedIn]);
 
     const handleUpdateAvatar = ({avatar}) => {
-        api.setUserAvatar({avatar})
+        const token = tokenCheck();
+
+        api.setUserAvatar({avatar}, token)
             .then((res) => {
-                setCurrentUserState(res);
+                setCurrentUserState(res.user);
                 closeAllPopups();
             })
             .catch((err) => {
@@ -105,9 +128,11 @@ function App() {
     }
 
     const handleUpdateUser = ({name, description}) => {
-        api.setUserInfo({name, description})
+        const token = tokenCheck();
+
+        api.setUserInfo({name, description}, token)
             .then((res) => {
-                setCurrentUserState(res)
+                setCurrentUserState(res.user)
                 closeAllPopups();
             })
             .catch((err) => {
@@ -116,9 +141,11 @@ function App() {
     }
 
     const handleAddPlaceSubmit = ({title, image}) => {
-        api.sendCard({title, image})
+        const token = tokenCheck();
+
+        api.sendCard({title, image}, token)
             .then((res) => {
-                setCurrentCardsState(([res, ...currentCards]))
+                setCurrentCardsState(([res.card, ...currentCards]))
                 closeAllPopups();
             })
             .catch((err) => {
@@ -127,28 +154,33 @@ function App() {
     }
 
     const handleLikeCardClick = ({like, id}) => {
-        const isLiked = like.some(i => i._id === currentUser._id);
+        const token = tokenCheck();
 
-        !isLiked ?
-            api.setLike(id, !isLiked)
+        const isLiked = like.some(i => i === currentUser._id);
+
+        if (!isLiked) {
+            api.setLike(id, token, !isLiked)
                 .then((result) => {
-                    setCurrentCardsState((state) => state.map((c) => c._id === id ? result : c));
+                    setCurrentCardsState((state) => state.map((c) => c._id === id ? result.card : c));
                 })
                 .catch((err) => {
                     console.log("Something is Wrong:", err);
                 })
-            :
-            api.removeLike(id, isLiked)
+        } else {
+            api.removeLike(id, token, isLiked)
                 .then((result) => {
-                    setCurrentCardsState((state) => state.map((c) => c._id === id ? result : c));
+                    setCurrentCardsState((state) => state.map((c) => c._id === id ? result.card : c));
                 })
                 .catch((err) => {
                     console.log("Something is Wrong:", err);
                 });
+        }
     }
 
     const handleDeleteCardClick = (cardId) => {
-        api.removeCard(cardId)
+        const token = tokenCheck();
+
+        api.removeCard(cardId, token)
             .then(() => {
                 setCurrentCardsState(currentCards.filter(item => item._id !== cardId))
                 closeAllPopups();
@@ -191,11 +223,10 @@ function App() {
     const handleLogin = ({email, password}) => {
         return Auth.authorize({email, password})
             .then((res) => {
-                if (res.token) {
+                if (res.user.token) {
 
                     setLoggedIn(true)
-                    localStorage.setItem('token', res.token)
-                    tokenCheck();
+                    localStorage.setItem('token', res.user.token)
 
                     setTimeout(() => {
                         history.push('/users/me')
@@ -211,8 +242,7 @@ function App() {
     const handleRegister = ({email, password}) => {
         return Auth.register({email, password})
             .then((res) => {
-                if (res.data) {
-                    localStorage.setItem('token', res.token)
+                if (res.user.email === email) {
 
                     setStatus(true)
                     setShowStatus({isOpen: true})
@@ -223,20 +253,6 @@ function App() {
                 setStatus(false)
                 setShowStatus({isOpen: true})
             })
-    }
-
-    const tokenCheck = () => {
-        if (localStorage.getItem('token')) {
-            let token = localStorage.getItem('token');
-            Auth.checkData(token)
-                .then((res) => {
-                    if (res) {
-                        setLoggedIn(true);
-                        history.push('/users/me');
-                        setUserData({email: res.data.email})
-                    }
-                });
-        }
     }
 
     return ((

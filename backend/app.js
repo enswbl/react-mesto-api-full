@@ -9,6 +9,8 @@ const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const { errors } = require('celebrate');
 
+const cors = require('cors');
+
 const path = require('path');
 
 const app = express();
@@ -39,18 +41,18 @@ mongoose.connect(DATA_BASE, {
   useUnifiedTopology: true,
 });
 
-const allowedCors = [
-  'https://mestoapp.nomoredomains.club',
-  'http://mestoapp.nomoredomains.club',
-  'http://localhost:3000',
-];
-
-const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
-
 app.use((req, res, next) => {
+  const allowedCors = [
+    'https://mestoapp.nomoredomains.club',
+    'http://mestoapp.nomoredomains.club',
+    'https://localhost:3000',
+    'http://localhost:3000',
+  ];
+
   const { origin } = req.headers;
 
   const { method } = req;
+  const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
   const requestHeaders = req.headers['access-control-request-headers'];
 
   if (allowedCors.includes(origin)) {
@@ -69,6 +71,8 @@ app.use((req, res, next) => {
 
   next();
 });
+
+app.use(cors({ origin: true, credentials: true }));
 
 app.use(requestLogger);
 

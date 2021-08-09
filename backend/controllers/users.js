@@ -6,16 +6,15 @@ const NotFoundError = require('../errors/not-found-err');
 const BadRequestError = require('../errors/bad-request-err');
 const ConflictError = require('../errors/conflict-err');
 
-const { NODE_ENV, JWT_SECRET } = require('../config');
+const { JWT_SECRET } = require('../config');
 
 const login = (req, res, next) => {
   const { email, password } = req.body;
   return User.findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign({ _id: user._id },
-        NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', {
-          expiresIn: '7d',
-        });
+      const token = jwt.sign({ _id: user._id }, JWT_SECRET, {
+        expiresIn: '7d',
+      });
       res
         .cookie('jwt', token, {
           maxAge: 3600000 * 24 * 7,
@@ -29,6 +28,7 @@ const login = (req, res, next) => {
             about: user.about,
             avatar: user.avatar,
             email: user.email,
+            token,
           },
         });
     })
@@ -101,7 +101,9 @@ const getSpecificUser = (req, res, next) => {
 };
 
 const updateUserInfo = (req, res, next) => {
-  User.findByIdAndUpdate(req.user._id, { name: req.body.name, about: req.body.about },
+  const { name, about } = req.body;
+
+  User.findByIdAndUpdate(req.user._id, { name, about },
     {
       new: true,
       runValidators: true,
@@ -119,7 +121,9 @@ const updateUserInfo = (req, res, next) => {
 };
 
 const updateAvatar = (req, res, next) => {
-  User.findByIdAndUpdate(req.user._id, { avatar: req.body.avatar },
+  const { avatar } = req.body;
+
+  User.findByIdAndUpdate(req.user._id, { avatar },
     {
       new: true,
       runValidators: true,
