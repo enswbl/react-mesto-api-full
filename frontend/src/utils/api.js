@@ -116,7 +116,7 @@ class Api {
 }
 
 const api = new Api({
-    baseUrl: "http://localhost:3030",  // TODO https://api.mestoapp.nomoredomains.monster
+    baseUrl: "https://api.mestoapp.nomoredomains.monster",
 });
 
 export default api;

@@ -1,5 +1,5 @@
 const {
-  NODE_ENV, PORT = 3030, DATA_BASE = 'mongodb://localhost:27017/mestodb', JWT_SECRET = 'secret', // TODO
+  NODE_ENV, PORT = 3030, DATA_BASE = 'mongodb://localhost:27017/mestodb', JWT_SECRET = 'dev-secret1',
 } = process.env;
 
 const RegExp = {
