@@ -77,6 +77,27 @@ function App() {
             return token;
         }
     }
+    
+    React.useEffect(() => {
+        const token = tokenCheck();
+
+        api.getInitialCards(token)
+            .then((res) => {
+                setCurrentCardsState(res.cards)
+            })
+            .catch((err) => {
+                console.log("Something is Wrong:", err);
+            });
+        
+        api.getUserInfo(token)
+            .then((res) => {
+                setCurrentUserState(res.user)
+            })
+            .catch((err) => {
+                console.log("Something is Wrong:", err);
+            });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [loggedIn])
 
     React.useEffect(() => {
         tokenCheck()
@@ -88,31 +109,6 @@ function App() {
             history.push('/users/me');
         }
     }, [history, loggedIn])
-
-    React.useEffect(() => {
-        const token = tokenCheck();
-
-        api.getUserInfo(token)
-            .then((res) => {
-                setCurrentUserState(res.user)
-            })
-            .catch((err) => {
-                console.log("Something is Wrong:", err);
-            });
-    }, [loggedIn])
-
-
-    React.useEffect(() => {
-        const token = tokenCheck();
-
-        api.getInitialCards(token)
-            .then((res) => {
-                setCurrentCardsState(res.cards)
-            })
-            .catch((err) => {
-                console.log("Something is Wrong:", err);
-            });
-    }, [loggedIn]);
 
     const handleUpdateAvatar = ({avatar}) => {
         const token = tokenCheck();
