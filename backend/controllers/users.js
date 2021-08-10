@@ -14,7 +14,7 @@ const login = (req, res, next) => {
     .then((user) => {
       const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret1', {
         expiresIn: '7d',
-      }); 
+      });
       res
         .cookie('jwt', token, {
           maxAge: 3600000 * 24 * 7,
@@ -23,11 +23,6 @@ const login = (req, res, next) => {
         })
         .send({
           user: {
-            _id: user._id,
-            name: user.name,
-            about: user.about,
-            avatar: user.avatar,
-            email: user.email,
             token,
           },
         });
